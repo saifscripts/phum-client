@@ -1,27 +1,47 @@
-import {
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-} from '@ant-design/icons';
-import { Layout, Menu } from 'antd';
+import { UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
+import { Layout, Menu, MenuProps } from 'antd';
 import { createElement } from 'react';
 
 const { Sider, Header, Content, Footer } = Layout;
 
-const items = [
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-  UserOutlined,
-].map((icon, index) => ({
-  key: String(index + 1),
-  icon: createElement(icon),
-  label: `nav ${index + 1}`,
-}));
+const items: MenuProps['items'] = [
+  {
+    key: '1',
+    icon: createElement(VideoCameraOutlined),
+    label: 'Dashboard',
+  },
+  {
+    key: '2',
+    icon: createElement(UserOutlined),
+    label: 'Profile',
+  },
+  {
+    key: '3',
+    icon: createElement(UserOutlined),
+    label: 'User Management',
+    children: [
+      {
+        key: '31',
+        icon: createElement(VideoCameraOutlined),
+        label: 'Create Admin',
+      },
+      {
+        key: '32',
+        icon: createElement(UserOutlined),
+        label: 'Create Student',
+      },
+      {
+        key: '33',
+        icon: createElement(UserOutlined),
+        label: 'Create Faculty',
+      },
+    ],
+  },
+];
 
 const MainLayout = () => {
   return (
-    <Layout>
+    <Layout style={{ height: '100vh' }}>
       <Sider
         breakpoint="lg"
         collapsedWidth="0"
@@ -32,7 +52,18 @@ const MainLayout = () => {
           console.log(collapsed, type);
         }}
       >
-        <div className="demo-logo-vertical" />
+        <div
+          style={{
+            color: 'white',
+            fontSize: '1.75rem',
+            height: '3rem',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <p>PHUM</p>
+        </div>
         <Menu
           theme="dark"
           mode="inline"

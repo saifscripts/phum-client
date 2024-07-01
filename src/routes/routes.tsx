@@ -1,11 +1,8 @@
 import { RouterProviderProps, createBrowserRouter } from 'react-router-dom';
 import App from '../App';
-import AdminDashboard from '../pages/admin/AdminDashboard';
-import CreateAdmin from '../pages/admin/CreateAdmin';
-import CreateFaculty from '../pages/admin/CreateFaculty';
-import CreateStudent from '../pages/admin/CreateStudent';
 import Login from '../pages/auth/Login';
 import Registration from '../pages/auth/Registration';
+import { adminPaths } from './admin.routes';
 
 const router: RouterProviderProps['router'] = createBrowserRouter([
   {
@@ -15,28 +12,17 @@ const router: RouterProviderProps['router'] = createBrowserRouter([
   {
     path: '/admin',
     element: <App />,
-    children: [
-      {
-        index: true,
-        element: <AdminDashboard />,
-      },
-      {
-        path: 'dashboard',
-        element: <AdminDashboard />,
-      },
-      {
-        path: 'create-admin',
-        element: <CreateAdmin />,
-      },
-      {
-        path: 'create-faculty',
-        element: <CreateFaculty />,
-      },
-      {
-        path: 'create-student',
-        element: <CreateStudent />,
-      },
-    ],
+    children: adminPaths,
+  },
+  {
+    path: '/faculty',
+    element: <App />,
+    children: adminPaths,
+  },
+  {
+    path: '/students',
+    element: <App />,
+    children: adminPaths,
   },
   {
     path: '/login',

@@ -1,39 +1,35 @@
 import { UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
 import { Layout, Menu, MenuProps } from 'antd';
 import { createElement } from 'react';
+import { NavLink, Outlet } from 'react-router-dom';
 
 const { Sider, Header, Content, Footer } = Layout;
 
 const items: MenuProps['items'] = [
   {
-    key: '1',
+    key: 'dashboard',
     icon: createElement(VideoCameraOutlined),
-    label: 'Dashboard',
+    label: <NavLink to="/admin/dashboard">Dashboard</NavLink>,
   },
   {
-    key: '2',
-    icon: createElement(UserOutlined),
-    label: 'Profile',
-  },
-  {
-    key: '3',
+    key: 'user-management',
     icon: createElement(UserOutlined),
     label: 'User Management',
     children: [
       {
-        key: '31',
-        icon: createElement(VideoCameraOutlined),
-        label: 'Create Admin',
+        key: 'create-admin',
+        icon: createElement(UserOutlined),
+        label: <NavLink to="/admin/create-admin">Create Admin</NavLink>,
       },
       {
-        key: '32',
+        key: 'create-faculty',
         icon: createElement(UserOutlined),
-        label: 'Create Student',
+        label: <NavLink to="/admin/create-faculty">Create Faculty</NavLink>,
       },
       {
-        key: '33',
+        key: 'create-student',
         icon: createElement(UserOutlined),
-        label: 'Create Faculty',
+        label: <NavLink to="/admin/create-student">Create Student</NavLink>,
       },
     ],
   },
@@ -81,7 +77,7 @@ const MainLayout = () => {
             }}
           >
             {/* Main Content */}
-            Main Content Goes Here
+            <Outlet />
           </div>
         </Content>
         <Footer style={{ textAlign: 'center' }}>

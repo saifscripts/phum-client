@@ -1,39 +1,8 @@
-import { UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
-import { Layout, Menu, MenuProps } from 'antd';
-import { createElement } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { Layout, Menu } from 'antd';
+import { Outlet } from 'react-router-dom';
+import { adminItems } from '../../routes/admin.routes';
 
 const { Sider, Header, Content, Footer } = Layout;
-
-const items: MenuProps['items'] = [
-  {
-    key: 'dashboard',
-    icon: createElement(VideoCameraOutlined),
-    label: <NavLink to="/admin/dashboard">Dashboard</NavLink>,
-  },
-  {
-    key: 'user-management',
-    icon: createElement(UserOutlined),
-    label: 'User Management',
-    children: [
-      {
-        key: 'create-admin',
-        icon: createElement(UserOutlined),
-        label: <NavLink to="/admin/create-admin">Create Admin</NavLink>,
-      },
-      {
-        key: 'create-faculty',
-        icon: createElement(UserOutlined),
-        label: <NavLink to="/admin/create-faculty">Create Faculty</NavLink>,
-      },
-      {
-        key: 'create-student',
-        icon: createElement(UserOutlined),
-        label: <NavLink to="/admin/create-student">Create Student</NavLink>,
-      },
-    ],
-  },
-];
 
 const MainLayout = () => {
   return (
@@ -64,7 +33,7 @@ const MainLayout = () => {
           theme="dark"
           mode="inline"
           defaultSelectedKeys={['4']}
-          items={items}
+          items={adminItems}
         />
       </Sider>
       <Layout>

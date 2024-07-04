@@ -1,7 +1,6 @@
 import { RouterProviderProps, createBrowserRouter } from 'react-router-dom';
 import App from '../App';
 import Login from '../pages/auth/Login';
-import Registration from '../pages/auth/Registration';
 import generateRoutes from '../utils/generateRoutes';
 import { adminPaths } from './admin.routes';
 import { facultyPaths } from './faculty.routes';
@@ -30,10 +29,6 @@ const router: RouterProviderProps['router'] = createBrowserRouter([
   {
     path: '/login',
     element: <Login />,
-  },
-  {
-    path: '/registration',
-    element: <Registration />,
   },
 ]);
 

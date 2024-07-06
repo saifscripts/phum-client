@@ -1,5 +1,6 @@
 import { UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
 import { createElement } from 'react';
+import AcademicSemester from '../pages/admin/AcademicManagement/AcademicSemester';
 import AdminDashboard from '../pages/admin/AdminDashboard';
 import CreateAdmin from '../pages/admin/CreateAdmin';
 import CreateFaculty from '../pages/admin/CreateFaculty';
@@ -11,6 +12,18 @@ export const adminPaths = [
     path: 'dashboard',
     icon: createElement(VideoCameraOutlined),
     element: <AdminDashboard />,
+  },
+  {
+    name: 'Academic Management',
+    icon: createElement(UserOutlined),
+    children: [
+      {
+        name: 'Academic Semester',
+        path: 'academic-semester',
+        icon: createElement(UserOutlined),
+        element: <AcademicSemester />,
+      },
+    ],
   },
   {
     name: 'User Management',

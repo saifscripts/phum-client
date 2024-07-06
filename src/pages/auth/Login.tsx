@@ -1,7 +1,9 @@
 import { Button } from 'antd';
 import { jwtDecode } from 'jwt-decode';
-import { useForm } from 'react-hook-form';
+import { FieldValues, useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
+import { IDecodedUser } from '../../interfaces';
 import { useLoginMutation } from '../../redux/features/auth/authApi';
 import { setUser } from '../../redux/features/auth/authSlice';
 import { useAppDispatch } from '../../redux/hooks';
@@ -18,11 +20,18 @@ const Login = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
 
-  const onSubmit = async (credentials: { id: string; password: string }) => {
-    const data = await login(credentials).unwrap();
-    const token = data.data.accessToken;
-    dispatch(setUser({ user: jwtDecode(token), token }));
-    navigate(state?.pathname || '/');
+  const onSubmit = async (credentials: FieldValues) => {
+    const toastId = toast.loading('Logging in...');
+    try {
+      const data = await login(credentials).unwrap();
+      const token = data.data.accessToken;
+      const user = jwtDecode(token) as IDecodedUser;
+      dispatch(setUser({ user, token }));
+      toast.success('Successfully logged in!', { id: toastId, duration: 2000 });
+      navigate(state?.pathname || `/${user.role}/dashboard`);
+    } catch (error) {
+      toast.error('Something Went Wrong!', { id: toastId, duration: 2000 });
+    }
   };
 
   return (

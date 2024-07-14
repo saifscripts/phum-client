@@ -2,13 +2,17 @@ import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Input, Typography } from 'antd';
 import { Controller } from 'react-hook-form';
 
-interface ICPasswordInputProps {
+interface IPHPasswordInputProps {
   name: string;
   label?: string;
   placeholder?: string;
 }
 
-const CPasswordInput = ({ name, label, placeholder }: ICPasswordInputProps) => {
+const PHPasswordInput = ({
+  name,
+  label,
+  placeholder,
+}: IPHPasswordInputProps) => {
   return (
     <div>
       {label && <Typography.Title level={5}>{label}</Typography.Title>}
@@ -28,4 +32,4 @@ const CPasswordInput = ({ name, label, placeholder }: ICPasswordInputProps) => {
   );
 };
 
-export default CPasswordInput;
+export default PHPasswordInput;

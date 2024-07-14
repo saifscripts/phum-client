@@ -3,9 +3,9 @@ import { jwtDecode } from 'jwt-decode';
 import { FieldValues } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import CForm from '../../components/form/CForm';
-import CInput from '../../components/form/CInput';
-import CPasswordInput from '../../components/form/CPasswordInput';
+import PHForm from '../../components/form/PHForm';
+import PHInput from '../../components/form/PHInput';
+import PHPasswordInput from '../../components/form/PHPasswordInput';
 import { IDecodedUser } from '../../interfaces';
 import { useLoginMutation } from '../../redux/features/auth/authApi';
 import { setUser } from '../../redux/features/auth/authSlice';
@@ -38,28 +38,28 @@ const Login = () => {
 
   return (
     <Flex style={{ height: '100vh' }} justify="center" align="center">
-      <CForm
+      <div
         style={{
           border: '1px solid #eeeeee',
           padding: '20px',
           borderRadius: '16px',
         }}
-        defaultValues={defaultValues}
-        onSubmit={onSubmit}
       >
-        <Flex vertical gap="middle">
-          <CInput name="id" label="User ID" placeholder="User ID" />
-          <CPasswordInput
-            name="password"
-            label="Password"
-            placeholder="Input Password"
-          />
+        <PHForm defaultValues={defaultValues} onSubmit={onSubmit}>
+          <Flex vertical gap="middle">
+            <PHInput name="id" label="User ID" placeholder="User ID" />
+            <PHPasswordInput
+              name="password"
+              label="Password"
+              placeholder="Input Password"
+            />
 
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Flex>
-      </CForm>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Flex>
+        </PHForm>
+      </div>
     </Flex>
   );
 };

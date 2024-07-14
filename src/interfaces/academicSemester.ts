@@ -15,6 +15,10 @@ export type IMonth =
 export type ISemesterName = 'Autumn' | 'Summer' | 'Fall';
 export type ISemesterCode = '01' | '02' | '03';
 
+export type ISemesterNameCodeMapper = {
+  [key in ISemesterName]: ISemesterCode;
+};
+
 export interface IAcademicSemester {
   name: ISemesterName;
   code: ISemesterCode;

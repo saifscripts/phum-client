@@ -10,20 +10,19 @@ interface IPHInputProps {
 
 const PHInput = ({ name, type, label, placeholder }: IPHInputProps) => {
   return (
-    <div>
-      <Controller
-        name={name}
-        render={({ field }) => (
-          <Form.Item label={label}>
-            <Input
-              {...field}
-              type={type || 'text'}
-              placeholder={placeholder || ''}
-            />
-          </Form.Item>
-        )}
-      />
-    </div>
+    <Controller
+      name={name}
+      render={({ field, fieldState: { error } }) => (
+        <Form.Item label={label}>
+          <Input
+            {...field}
+            type={type || 'text'}
+            placeholder={placeholder || ''}
+          />
+          {error && <small style={{ color: 'red' }}>{error?.message}</small>}
+        </Form.Item>
+      )}
+    />
   );
 };
 

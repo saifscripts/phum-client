@@ -14,22 +14,21 @@ const PHPasswordInput = ({
   placeholder,
 }: IPHPasswordInputProps) => {
   return (
-    <div>
-      <Controller
-        name={name}
-        render={({ field }) => (
-          <Form.Item label={label}>
-            <Input.Password
-              {...field}
-              placeholder={placeholder || ''}
-              iconRender={(visible) =>
-                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-              }
-            />
-          </Form.Item>
-        )}
-      />
-    </div>
+    <Controller
+      name={name}
+      render={({ field, fieldState: { error } }) => (
+        <Form.Item label={label}>
+          <Input.Password
+            {...field}
+            placeholder={placeholder || ''}
+            iconRender={(visible) =>
+              visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+            }
+          />
+          {error && <small style={{ color: 'red' }}>{error?.message}</small>}
+        </Form.Item>
+      )}
+    />
   );
 };
 

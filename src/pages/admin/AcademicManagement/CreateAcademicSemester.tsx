@@ -1,16 +1,28 @@
 import { Button, Col, Flex, Form } from 'antd';
 import { FieldValues } from 'react-hook-form';
+import { toast } from 'sonner';
 import PHForm from '../../../components/form/PHForm';
 import PHSelect from '../../../components/form/PHSelect';
 import { monthOptions, semesterOptions, yearOptions } from '../../../constants';
+import { useCreateSemesterMutation } from '../../../redux/features/admin/academicManagement/academicManagementApi';
 import { academicSemesterSchema } from '../../../schemas/academicManagement';
 
 const CreateAcademicSemester = () => {
-  const onSubmit = (data: FieldValues) => {
+  const [createSemester] = useCreateSemesterMutation();
+
+  const onSubmit = async (data: FieldValues) => {
     data.code = data?.name;
     data.name = semesterOptions?.[Number(data?.name) - 1]?.label;
 
-    console.log(data);
+    const res = await createSemester(data);
+    console.log(res);
+
+    if (res?.data?.success) {
+      toast.success(res?.data?.message);
+    } else {
+      toast.error('Something Went Wrong!');
+    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   };
   return (
     <Flex justify="center" align="center">

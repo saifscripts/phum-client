@@ -31,6 +31,7 @@ const baseQueryWithRefreshToken: BaseQueryFn = async (args, api, options) => {
     const user = (api.getState() as RootState).auth.user;
 
     api.dispatch(setUser({ user, token }));
+
     result = await baseQuery(args, api, options);
   }
 

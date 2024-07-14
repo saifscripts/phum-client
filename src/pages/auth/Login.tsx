@@ -1,20 +1,22 @@
-import { Button } from 'antd';
+import { Button, Flex } from 'antd';
 import { jwtDecode } from 'jwt-decode';
-import { FieldValues, useForm } from 'react-hook-form';
+import { FieldValues } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
+import CForm from '../../components/form/CForm';
+import CInput from '../../components/form/CInput';
+import CPasswordInput from '../../components/form/CPasswordInput';
 import { IDecodedUser } from '../../interfaces';
 import { useLoginMutation } from '../../redux/features/auth/authApi';
 import { setUser } from '../../redux/features/auth/authSlice';
 import { useAppDispatch } from '../../redux/hooks';
 
+const defaultValues = {
+  id: 'A-0001',
+  password: '456125',
+};
+
 const Login = () => {
-  const { register, handleSubmit } = useForm({
-    defaultValues: {
-      id: 'A-0001',
-      password: '456125',
-    },
-  });
   const [login] = useLoginMutation();
   const dispatch = useAppDispatch();
   const { state } = useLocation();
@@ -35,20 +37,30 @@ const Login = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label htmlFor="id">ID:</label>
-        <input type="text" id="id" {...register('id')} />
-      </div>
-      <div>
-        <label htmlFor="password">Password:</label>
-        <input type="text" id="password" {...register('password')} />
-      </div>
+    <Flex style={{ height: '100vh' }} justify="center" align="center">
+      <CForm
+        style={{
+          border: '1px solid #eeeeee',
+          padding: '20px',
+          borderRadius: '16px',
+        }}
+        defaultValues={defaultValues}
+        onSubmit={onSubmit}
+      >
+        <Flex vertical gap="middle">
+          <CInput name="id" label="User ID" placeholder="User ID" />
+          <CPasswordInput
+            name="password"
+            label="Password"
+            placeholder="Input Password"
+          />
 
-      <Button type="default" htmlType="submit">
-        Submit
-      </Button>
-    </form>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Flex>
+      </CForm>
+    </Flex>
   );
 };
 

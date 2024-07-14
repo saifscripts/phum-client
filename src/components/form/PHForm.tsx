@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Form } from 'antd';
 import { ReactNode } from 'react';
 import {
   FieldValues,
@@ -18,7 +19,9 @@ const PHForm = ({ children, onSubmit, defaultValues }: IPHFormProps) => {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>{children}</form>
+      <Form layout="vertical" onFinish={methods.handleSubmit(onSubmit)}>
+        {children}
+      </Form>
     </FormProvider>
   );
 };

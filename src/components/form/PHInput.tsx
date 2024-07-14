@@ -1,4 +1,4 @@
-import { Input, Typography } from 'antd';
+import { Form, Input } from 'antd';
 import { Controller } from 'react-hook-form';
 
 interface IPHInputProps {
@@ -11,15 +11,16 @@ interface IPHInputProps {
 const PHInput = ({ name, type, label, placeholder }: IPHInputProps) => {
   return (
     <div>
-      {label && <Typography.Title level={5}>{label}</Typography.Title>}
       <Controller
         name={name}
         render={({ field }) => (
-          <Input
-            {...field}
-            type={type || 'text'}
-            placeholder={placeholder || ''}
-          />
+          <Form.Item label={label}>
+            <Input
+              {...field}
+              type={type || 'text'}
+              placeholder={placeholder || ''}
+            />
+          </Form.Item>
         )}
       />
     </div>

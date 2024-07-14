@@ -1,5 +1,5 @@
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { Input, Typography } from 'antd';
+import { Form, Input } from 'antd';
 import { Controller } from 'react-hook-form';
 
 interface IPHPasswordInputProps {
@@ -15,17 +15,18 @@ const PHPasswordInput = ({
 }: IPHPasswordInputProps) => {
   return (
     <div>
-      {label && <Typography.Title level={5}>{label}</Typography.Title>}
       <Controller
         name={name}
         render={({ field }) => (
-          <Input.Password
-            {...field}
-            placeholder={placeholder || ''}
-            iconRender={(visible) =>
-              visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-            }
-          />
+          <Form.Item label={label}>
+            <Input.Password
+              {...field}
+              placeholder={placeholder || ''}
+              iconRender={(visible) =>
+                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+              }
+            />
+          </Form.Item>
         )}
       />
     </div>

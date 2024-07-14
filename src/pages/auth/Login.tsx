@@ -1,4 +1,4 @@
-import { Button, Flex } from 'antd';
+import { Button, Col, Flex, Form } from 'antd';
 import { jwtDecode } from 'jwt-decode';
 import { FieldValues } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -38,28 +38,29 @@ const Login = () => {
 
   return (
     <Flex style={{ height: '100vh' }} justify="center" align="center">
-      <div
+      <Col
         style={{
           border: '1px solid #eeeeee',
           padding: '20px',
           borderRadius: '16px',
         }}
+        span={6}
       >
         <PHForm defaultValues={defaultValues} onSubmit={onSubmit}>
-          <Flex vertical gap="middle">
-            <PHInput name="id" label="User ID" placeholder="User ID" />
-            <PHPasswordInput
-              name="password"
-              label="Password"
-              placeholder="Input Password"
-            />
+          <PHInput name="id" label="User ID" placeholder="User ID" />
+          <PHPasswordInput
+            name="password"
+            label="Password"
+            placeholder="Input Password"
+          />
 
-            <Button type="primary" htmlType="submit">
+          <Form.Item>
+            <Button style={{ width: '100%' }} type="primary" htmlType="submit">
               Submit
             </Button>
-          </Flex>
+          </Form.Item>
         </PHForm>
-      </div>
+      </Col>
     </Flex>
   );
 };

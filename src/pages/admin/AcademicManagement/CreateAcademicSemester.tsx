@@ -1,17 +1,32 @@
-import { Button } from 'antd';
+import { Button, Col, Flex, Form } from 'antd';
 import { FieldValues } from 'react-hook-form';
 import PHForm from '../../../components/form/PHForm';
-import PHInput from '../../../components/form/PHInput';
+import PHSelect from '../../../components/form/PHSelect';
 
 const CreateAcademicSemester = () => {
   const onSubmit = (data: FieldValues) => {
     console.log(data);
   };
   return (
-    <PHForm onSubmit={onSubmit}>
-      <PHInput name="name" />
-      <Button htmlType="submit">Submit</Button>
-    </PHForm>
+    <Flex justify="center" align="center">
+      <Col span={8}>
+        <PHForm onSubmit={onSubmit}>
+          <PHSelect
+            label="Name"
+            options={[
+              { value: 'Autumn', label: 'Autumn' },
+              { value: 'Summer', label: 'Summer' },
+              { value: 'Fall', label: 'Fall' },
+            ]}
+          />
+          <Form.Item>
+            <Button style={{ width: '100%' }} type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+        </PHForm>
+      </Col>
+    </Flex>
   );
 };
 

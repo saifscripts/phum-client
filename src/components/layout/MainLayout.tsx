@@ -14,7 +14,7 @@ const MainLayout = () => {
   };
 
   return (
-    <Layout style={{ height: '100vh' }}>
+    <Layout style={{ height: '100%' }}>
       <Sidebar />
       <Layout>
         <Header
@@ -24,6 +24,9 @@ const MainLayout = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'end',
+            position: 'sticky',
+            top: 0,
+            zIndex: 999,
           }}
         >
           <Button type="primary">Logout</Button>

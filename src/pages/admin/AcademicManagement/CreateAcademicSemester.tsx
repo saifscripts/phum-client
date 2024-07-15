@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 import PHForm from '../../../components/form/PHForm';
 import PHSelect from '../../../components/form/PHSelect';
 import { monthOptions, semesterOptions, yearOptions } from '../../../constants';
+import { IAcademicSemester, IResponse } from '../../../interfaces';
 import { useCreateSemesterMutation } from '../../../redux/features/admin/academicManagement/academicManagementApi';
 import { academicSemesterSchema } from '../../../schemas/academicManagement';
 
@@ -14,16 +15,15 @@ const CreateAcademicSemester = () => {
     data.code = data?.name;
     data.name = semesterOptions?.[Number(data?.name) - 1]?.label;
 
-    const res = await createSemester(data);
-    console.log(res);
+    const res = (await createSemester(data)) as IResponse<IAcademicSemester>;
 
-    if (res?.data?.success) {
-      toast.success(res?.data?.message);
+    if (res.error) {
+      toast.error(res.error.data.message);
     } else {
-      toast.error('Something Went Wrong!');
+      toast.success(res.data?.message);
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   };
+
   return (
     <Flex justify="center" align="center">
       <Col span={8}>

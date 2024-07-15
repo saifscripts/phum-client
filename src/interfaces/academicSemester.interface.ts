@@ -20,6 +20,7 @@ export type ISemesterNameCodeMapper = {
 };
 
 export interface IAcademicSemester {
+  _id?: string;
   name: ISemesterName;
   code: ISemesterCode;
   year: string;

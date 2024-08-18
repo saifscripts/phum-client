@@ -2,8 +2,8 @@ import {
   IAcademicSemester,
   IQueryParam,
   ISuccessResponse,
-} from '../../../../interfaces';
-import { baseApi } from '../../../api/baseApi';
+} from '../../../interfaces';
+import { baseApi } from '../../api/baseApi';
 
 export const academicManagementApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({

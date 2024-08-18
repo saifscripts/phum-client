@@ -4,7 +4,7 @@ import PHDatePicker from '../../../components/form/PHDatePicker';
 import PHForm from '../../../components/form/PHForm';
 import PHInput from '../../../components/form/PHInput';
 import PHSelect from '../../../components/form/PHSelect';
-import { useGetAllSemestersQuery } from '../../../redux/features/admin/academicManagement/academicManagementApi';
+import { useGetAllSemestersQuery } from '../../../redux/features/admin/academicManagementApi';
 
 // {
 //     "password": "456125",

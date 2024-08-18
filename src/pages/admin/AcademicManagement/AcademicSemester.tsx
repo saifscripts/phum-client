@@ -1,7 +1,7 @@
 import { Table, TableColumnsType, TableProps } from 'antd';
 import { useState } from 'react';
 import { IAcademicSemester, IQueryParam } from '../../../interfaces';
-import { useGetAllSemestersQuery } from '../../../redux/features/admin/academicManagement/academicManagementApi';
+import { useGetAllSemestersQuery } from '../../../redux/features/admin/academicManagementApi';
 
 type ISemesterData = Pick<
   IAcademicSemester,

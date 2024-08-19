@@ -29,10 +29,10 @@ export const BloodGroups = [
   'B+',
   'AB+',
   'O+',
-  'A+',
-  'B+',
-  'AB+',
-  'O+',
+  'A-',
+  'B-',
+  'AB-',
+  'O-',
 ] as const;
 
 export const monthOptions = Months.map((item) => ({

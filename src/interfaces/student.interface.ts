@@ -1,10 +1,7 @@
-import { BloodGroups, Genders } from '../constants';
-
-export interface IUserName {
-  firstName: string;
-  middleName: string;
-  lastName: string;
-}
+import { BloodGroups } from '../constants';
+import { IAcademicDepartment } from './academicDepartment.interface';
+import { IAcademicSemester } from './academicSemester.interface';
+import { IGender, IUser, IUserName } from './user.interface';
 
 export interface IGuardian {
   fatherName: string;
@@ -25,10 +22,10 @@ export interface ILocalGuardian {
 export interface IStudent {
   _id: string;
   id: string;
-  user: string;
+  user: IUser;
   name: IUserName;
   fullName: string;
-  gender: (typeof Genders)[number];
+  gender: IGender;
   dateOfBirth?: Date;
   email: string;
   contactNo: string;
@@ -39,8 +36,8 @@ export interface IStudent {
   guardian: IGuardian;
   localGuardian: ILocalGuardian;
   profileImg?: string;
-  admissionSemester: string;
-  academicDepartment: string;
+  admissionSemester: IAcademicSemester;
+  academicDepartment: IAcademicDepartment;
   academicFaculty: string;
   isDeleted: boolean;
 }

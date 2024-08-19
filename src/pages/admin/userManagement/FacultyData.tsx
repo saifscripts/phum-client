@@ -8,11 +8,11 @@ import {
 } from 'antd';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { IQueryParam, IStudent } from '../../../interfaces';
-import { useGetAllStudentsQuery } from '../../../redux/features/admin/userManagementApi';
+import { IFaculty, IQueryParam } from '../../../interfaces';
+import { useGetAllFacultiesQuery } from '../../../redux/features/admin/userManagementApi';
 import BlockUser from './BlockUser';
 
-type ITableData = Pick<IStudent, 'fullName' | 'id' | 'email' | 'contactNo'>;
+type ITableData = Pick<IFaculty, 'fullName' | 'id' | 'email' | 'contactNo'>;
 
 const columns: TableColumnsType<ITableData> = [
   {
@@ -33,10 +33,10 @@ const columns: TableColumnsType<ITableData> = [
     width: '1%',
     render: (item) => (
       <Space>
-        <Link to={`/admin/student-data/${item.key}`}>
+        <Link to={`/admin/faculty-data/${item.key}`}>
           <Button>Details</Button>
         </Link>
-        <Link to={`/admin/student-data/edit/${item.key}`}>
+        <Link to={`/admin/faculty-data/edit/${item.key}`}>
           <Button>Update</Button>
         </Link>
         <BlockUser userData={item} />
@@ -45,18 +45,18 @@ const columns: TableColumnsType<ITableData> = [
   },
 ];
 
-const StudentData = () => {
+const FacultyData = () => {
   const [params, setParams] = useState<IQueryParam[]>([]);
   const [page, setPage] = useState(1);
 
-  const { data, isFetching } = useGetAllStudentsQuery([
+  const { data, isFetching } = useGetAllFacultiesQuery([
     { key: 'limit', value: 5 },
     { key: 'page', value: page },
     { key: 'sort', value: 'id' },
     ...params,
   ]);
 
-  const studentData = data?.students?.map(
+  const facultyData = data?.faculties?.map(
     ({ _id, fullName, id, email, contactNo, user }) => ({
       key: _id,
       fullName,
@@ -92,7 +92,7 @@ const StudentData = () => {
     <>
       <Table
         loading={isFetching}
-        dataSource={studentData}
+        dataSource={facultyData}
         columns={columns}
         onChange={onChange}
         pagination={false}
@@ -106,4 +106,4 @@ const StudentData = () => {
   );
 };
 
-export default StudentData;
+export default FacultyData;

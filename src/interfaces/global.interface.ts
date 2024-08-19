@@ -1,15 +1,17 @@
-interface IErrorSource {
+export interface IErrorSource {
   path: string | number;
   message: string;
 }
 
-export interface semesterData {
-  data: {
-    success: boolean;
-    message: string;
-    errorSources: IErrorSource[];
+export interface IErrorResponse {
+  error: {
+    data: {
+      success: boolean;
+      message: string;
+      errorSources: IErrorSource[];
+    };
+    status: number;
   };
-  status: number;
 }
 
 export interface IMetaData {
@@ -27,7 +29,7 @@ export interface ISuccessResponse<T> {
 }
 
 export interface IResponse<T> {
-  error?: semesterData;
+  error?: IErrorResponse;
   data?: ISuccessResponse<T>;
 }
 

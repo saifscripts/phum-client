@@ -1,6 +1,6 @@
 import { Button, Col, Divider, notification, Row } from 'antd';
 import { FieldValues, SubmitHandler } from 'react-hook-form';
-import PHDatePicker from '../../../components/form/PHDatePicker';
+import { useParams } from 'react-router-dom';
 import PHFileInput from '../../../components/form/PHFileInput';
 import PHForm from '../../../components/form/PHForm';
 import PHInput from '../../../components/form/PHInput';
@@ -11,12 +11,28 @@ import {
   useGetAllAcademicDepartmentsQuery,
   useGetAllSemestersQuery,
 } from '../../../redux/features/admin/academicManagementApi';
-import { useCreateStudentMutation } from '../../../redux/features/admin/userManagementApi';
+import {
+  useGetSingleStudentQuery,
+  useUpdateStudentMutation,
+} from '../../../redux/features/admin/userManagementApi';
 import flattenErrorMessages from '../../../utils/flattenErrorMessages';
 
-const CreateStudent = () => {
-  const [createStudent] = useCreateStudentMutation();
+const UpdateStudent = () => {
+  const { studentId } = useParams();
+  const [updateStudent] = useUpdateStudentMutation();
   const [toast, contextHolder] = notification.useNotification();
+
+  const {
+    data: studentData,
+    isLoading: isStudentLoading,
+    refetch,
+  } = useGetSingleStudentQuery(studentId as string);
+
+  const studentDefaultValues = {
+    ...studentData,
+    academicDepartment: studentData?.academicDepartment?._id,
+    admissionSemester: studentData?.admissionSemester?._id,
+  };
 
   const { data: semesters, isLoading: isSemesterLoading } =
     useGetAllSemestersQuery([]);
@@ -36,22 +52,19 @@ const CreateStudent = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const studentData = {
-      password: import.meta.env.VITE_DEFAULT_PASSWORD,
       student: data,
     };
 
-    const formData = new FormData();
-    formData.append('data', JSON.stringify(studentData));
-    formData.append('file', data.image);
-
-    const result = await createStudent(formData);
+    const result = await updateStudent({
+      id: studentId as string,
+      data: studentData,
+    });
 
     if (result?.data) {
+      refetch();
       toast.success({
-        message: 'Student added Successfully!',
+        message: 'Student data updated successfully!',
       });
-
-      return true; // this will reset the form
     } else {
       const description = flattenErrorMessages(
         (result as IErrorResponse)?.error?.data?.errorSources
@@ -63,10 +76,14 @@ const CreateStudent = () => {
     }
   };
 
+  if (isStudentLoading) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <>
       {contextHolder}
-      <PHForm onSubmit={onSubmit}>
+      <PHForm onSubmit={onSubmit} defaultValues={studentDefaultValues}>
         <Divider>Personal Info</Divider>
         <Row gutter={24}>
           <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
@@ -86,13 +103,13 @@ const CreateStudent = () => {
               options={genderOptions}
             />
           </Col>
-          <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
-            <PHDatePicker
-              name="dateOfBirth"
-              label="Date of Birth"
-              placeholder="Select Date of Birth"
-            />
-          </Col>
+          {/* <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+          <PHDatePicker
+            name="dateOfBirth"
+            label="Date of Birth"
+            placeholder="Select Date of Birth"
+          />
+        </Col> */}
           <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
             <PHSelect
               name="bloogGroup"
@@ -202,4 +219,4 @@ const CreateStudent = () => {
   );
 };
 
-export default CreateStudent;
+export default UpdateStudent;

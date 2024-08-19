@@ -15,6 +15,7 @@ interface IPHFormProps {
   onSubmit: SubmitHandler<FieldValues>;
   defaultValues?: Record<string, any>;
   schema?: Schema;
+  refetch?: boolean;
 }
 
 const PHForm = ({
@@ -28,14 +29,14 @@ const PHForm = ({
     resolver: schema && zodResolver(schema),
   });
 
-  const submit: SubmitHandler<FieldValues> = (data) => {
-    onSubmit(data);
-    methods.reset();
+  const submitHandler: SubmitHandler<FieldValues> = async (data) => {
+    const shouldReset = await onSubmit(data);
+    if (shouldReset) methods.reset();
   };
 
   return (
     <FormProvider {...methods}>
-      <Form layout="vertical" onFinish={methods.handleSubmit(submit)}>
+      <Form layout="vertical" onFinish={methods.handleSubmit(submitHandler)}>
         {children}
       </Form>
     </FormProvider>

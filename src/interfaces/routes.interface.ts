@@ -1,9 +1,9 @@
 import { ReactNode } from 'react';
 
 export interface IPath {
-  name: string;
+  name?: string;
   path?: string;
-  icon: ReactNode;
+  icon?: ReactNode;
   element?: ReactNode;
   children?: IPath[];
 }

@@ -1,5 +1,6 @@
 import { UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
 import { createElement } from 'react';
+import { IPath } from '../interfaces';
 import AcademicDepartment from '../pages/admin/AcademicManagement/AcademicDepartment';
 import AcademicFaculty from '../pages/admin/AcademicManagement/AcademicFaculty';
 import AcademicSemesters from '../pages/admin/AcademicManagement/AcademicSemesters';
@@ -7,13 +8,20 @@ import CreateAcademicDepartment from '../pages/admin/AcademicManagement/CreateAc
 import CreateAcademicFaculty from '../pages/admin/AcademicManagement/CreateAcademicFaculty';
 import CreateAcademicSemester from '../pages/admin/AcademicManagement/CreateAcademicSemester';
 import AdminDashboard from '../pages/admin/AdminDashboard';
+import AdminData from '../pages/admin/userManagement/AdminData';
+import AdminDetails from '../pages/admin/userManagement/AdminDetails';
 import CreateAdmin from '../pages/admin/userManagement/CreateAdmin';
 import CreateFaculty from '../pages/admin/userManagement/CreateFaculty';
 import CreateStudent from '../pages/admin/userManagement/CreateStudent';
+import FacultyData from '../pages/admin/userManagement/FacultyData';
+import FacultyDetails from '../pages/admin/userManagement/FacultyDetails';
 import StudentData from '../pages/admin/userManagement/StudentData';
 import StudentDetails from '../pages/admin/userManagement/StudentDetails';
+import UpdateAdmin from '../pages/admin/userManagement/UpdateAdmin';
+import UpdateFaculty from '../pages/admin/userManagement/UpdateFaculty';
+import UpdateStudent from '../pages/admin/userManagement/UpdateStudent';
 
-export const adminPaths = [
+export const adminPaths: IPath[] = [
   {
     name: 'Dashboard',
     path: 'dashboard',
@@ -79,10 +87,32 @@ export const adminPaths = [
         element: <StudentData />,
       },
       {
-        // name: 'Students',
         path: 'student-data/:studentId',
-        // icon: createElement(UserOutlined),
         element: <StudentDetails />,
+      },
+      {
+        path: 'student-data/edit/:studentId',
+        element: <UpdateStudent />,
+      },
+      {
+        name: 'Create Faculty',
+        path: 'create-faculty',
+        icon: createElement(UserOutlined),
+        element: <CreateFaculty />,
+      },
+      {
+        name: 'Faculties',
+        path: 'faculties-data',
+        icon: createElement(UserOutlined),
+        element: <FacultyData />,
+      },
+      {
+        path: 'faculty-data/:facultyId',
+        element: <FacultyDetails />,
+      },
+      {
+        path: 'faculty-data/edit/:facultyId',
+        element: <UpdateFaculty />,
       },
       {
         name: 'Create Admin',
@@ -91,10 +121,18 @@ export const adminPaths = [
         element: <CreateAdmin />,
       },
       {
-        name: 'Create Faculty',
-        path: 'create-faculty',
+        name: 'Admins',
+        path: 'admins-data',
         icon: createElement(UserOutlined),
-        element: <CreateFaculty />,
+        element: <AdminData />,
+      },
+      {
+        path: 'admin-data/:adminId',
+        element: <AdminDetails />,
+      },
+      {
+        path: 'admin-data/edit/:adminId',
+        element: <UpdateAdmin />,
       },
     ],
   },

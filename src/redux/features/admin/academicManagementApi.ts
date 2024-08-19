@@ -20,7 +20,9 @@ export const academicManagementApi = baseApi.injectEndpoints({
         const params = new URLSearchParams();
 
         if (queryParams) {
-          queryParams.forEach(({ key, value }) => params.append(key, value));
+          queryParams.forEach(({ key, value }) =>
+            params.append(key, value.toString())
+          );
         }
 
         return {
@@ -37,7 +39,9 @@ export const academicManagementApi = baseApi.injectEndpoints({
         const params = new URLSearchParams();
 
         if (queryParams) {
-          queryParams.forEach(({ key, value }) => params.append(key, value));
+          queryParams.forEach(({ key, value }) =>
+            params.append(key, value.toString())
+          );
         }
 
         return {

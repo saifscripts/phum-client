@@ -12,10 +12,18 @@ export interface semesterData {
   status: number;
 }
 
+export interface IMetaData {
+  page: number;
+  limit: number;
+  total: number;
+  totalPage: number;
+}
+
 export interface ISuccessResponse<T> {
   success: boolean;
   message: string;
   data: T;
+  meta?: IMetaData;
 }
 
 export interface IResponse<T> {
@@ -25,5 +33,5 @@ export interface IResponse<T> {
 
 export interface IQueryParam {
   key: string;
-  value: string;
+  value: string | number;
 }

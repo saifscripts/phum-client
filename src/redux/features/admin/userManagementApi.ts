@@ -15,7 +15,9 @@ export const userManagementApi = baseApi.injectEndpoints({
         const params = new URLSearchParams();
 
         if (queryParams) {
-          queryParams.forEach(({ key, value }) => params.append(key, value));
+          queryParams.forEach(({ key, value }) =>
+            params.append(key, value.toString())
+          );
         }
 
         return {
@@ -24,7 +26,10 @@ export const userManagementApi = baseApi.injectEndpoints({
           params,
         };
       },
-      transformResponse: (res: ISuccessResponse<IStudent[]>) => res.data,
+      transformResponse: (res: ISuccessResponse<IStudent[]>) => {
+        console.log(res);
+        return { students: res.data, meta: res.meta };
+      },
     }),
   }),
 });

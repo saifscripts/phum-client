@@ -1,4 +1,11 @@
-import { Button, Space, Table, TableColumnsType, TableProps } from 'antd';
+import {
+  Button,
+  Pagination,
+  Space,
+  Table,
+  TableColumnsType,
+  TableProps,
+} from 'antd';
 import { useState } from 'react';
 import { IQueryParam, IStudent } from '../../../interfaces';
 import { useGetAllStudentsQuery } from '../../../redux/features/admin/userManagementApi';
@@ -32,19 +39,22 @@ const columns: TableColumnsType<ITableData> = [
 
 const StudentData = () => {
   const [params, setParams] = useState<IQueryParam[]>([]);
-  const [page, setPage] = useState('1');
+  const [page, setPage] = useState(1);
 
-  const { data: students, isFetching } = useGetAllStudentsQuery([
-    { key: 'limit', value: '3' },
+  const { data, isFetching } = useGetAllStudentsQuery([
+    { key: 'limit', value: 10 },
     { key: 'page', value: page },
+    { key: 'sort', value: 'id' },
     ...params,
   ]);
 
-  const studentData = students?.map(({ _id, fullName, id }) => ({
+  const studentData = data?.students?.map(({ _id, fullName, id }) => ({
     key: _id,
     fullName,
     id,
   }));
+
+  const metaData = data?.meta;
 
   const onChange: TableProps<ITableData>['onChange'] = (
     _pagination,
@@ -66,12 +76,20 @@ const StudentData = () => {
   };
 
   return (
-    <Table
-      loading={isFetching}
-      dataSource={studentData}
-      columns={columns}
-      onChange={onChange}
-    />
+    <>
+      <Table
+        loading={isFetching}
+        dataSource={studentData}
+        columns={columns}
+        onChange={onChange}
+        pagination={false}
+      />
+      <Pagination
+        pageSize={metaData?.limit}
+        total={metaData?.total}
+        onChange={(value) => setPage(value)}
+      />
+    </>
   );
 };
 

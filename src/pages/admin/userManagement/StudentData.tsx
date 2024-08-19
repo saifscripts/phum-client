@@ -32,7 +32,13 @@ const columns: TableColumnsType<ITableData> = [
 
 const StudentData = () => {
   const [params, setParams] = useState<IQueryParam[]>([]);
-  const { data: students, isFetching } = useGetAllStudentsQuery(params);
+  const [page, setPage] = useState('1');
+
+  const { data: students, isFetching } = useGetAllStudentsQuery([
+    { key: 'limit', value: '3' },
+    { key: 'page', value: page },
+    ...params,
+  ]);
 
   const studentData = students?.map(({ _id, fullName, id }) => ({
     key: _id,

@@ -7,10 +7,11 @@ import {
   TableProps,
 } from 'antd';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { IQueryParam, IStudent } from '../../../interfaces';
 import { useGetAllStudentsQuery } from '../../../redux/features/admin/userManagementApi';
 
-type ITableData = Pick<IStudent, 'fullName' | 'id'>;
+type ITableData = Pick<IStudent, 'fullName' | 'id' | 'email' | 'contactNo'>;
 
 const columns: TableColumnsType<ITableData> = [
   {
@@ -23,14 +24,18 @@ const columns: TableColumnsType<ITableData> = [
     dataIndex: 'id',
     key: 'id',
   },
+  { title: 'Email', dataIndex: 'email', key: 'email' },
+  { title: 'Contact No.', dataIndex: 'contactNo', key: 'contactNo' },
   {
     title: 'Action',
     key: 'action',
     width: '1%',
-    render: () => (
+    render: ({ key }) => (
       <Space>
+        <Link to={`/admin/student-data/${key}`}>
+          <Button>Details</Button>
+        </Link>
         <Button>Update</Button>
-        <Button>Delete</Button>
         <Button>Block</Button>
       </Space>
     ),
@@ -42,17 +47,21 @@ const StudentData = () => {
   const [page, setPage] = useState(1);
 
   const { data, isFetching } = useGetAllStudentsQuery([
-    { key: 'limit', value: 10 },
+    { key: 'limit', value: 5 },
     { key: 'page', value: page },
     { key: 'sort', value: 'id' },
     ...params,
   ]);
 
-  const studentData = data?.students?.map(({ _id, fullName, id }) => ({
-    key: _id,
-    fullName,
-    id,
-  }));
+  const studentData = data?.students?.map(
+    ({ _id, fullName, id, email, contactNo }) => ({
+      key: _id,
+      fullName,
+      id,
+      email,
+      contactNo,
+    })
+  );
 
   const metaData = data?.meta;
 

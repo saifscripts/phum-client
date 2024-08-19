@@ -1,10 +1,16 @@
 import { Button, Col, Divider, Row } from 'antd';
 import { FieldValues, SubmitHandler } from 'react-hook-form';
 import PHDatePicker from '../../../components/form/PHDatePicker';
+import PHFileInput from '../../../components/form/PHFileInput';
 import PHForm from '../../../components/form/PHForm';
 import PHInput from '../../../components/form/PHInput';
 import PHSelect from '../../../components/form/PHSelect';
-import { useGetAllSemestersQuery } from '../../../redux/features/admin/academicManagementApi';
+import { bloodGroupOptions, genderOptions } from '../../../constants';
+import {
+  useGetAllAcademicDepartmentsQuery,
+  useGetAllSemestersQuery,
+} from '../../../redux/features/admin/academicManagementApi';
+import { useCreateStudentMutation } from '../../../redux/features/admin/userManagementApi';
 
 // {
 //     "password": "456125",
@@ -40,23 +46,75 @@ import { useGetAllSemestersQuery } from '../../../redux/features/admin/academicM
 //     }
 // }
 
-const CreateStudent = () => {
-  const { data, isLoading: isSemesterLoading } = useGetAllSemestersQuery([]);
+//! This is for development only
+const studentDefaultValues = {
+  name: {
+    firstName: 'John',
+    middleName: 'M',
+    lastName: 'Doe',
+  },
+  gender: 'male',
+  //   dateOfBirth: '2000-05-15',
+  bloogGroup: 'AB+',
+  email: 'john.doe44@example.com',
+  contactNo: '+1234567890',
+  emergencyContactNo: '+0987654321',
+  presentAddress: '123 Main St, Springfield, USA',
+  permanentAddress: '456 Elm St, Springfield, USA',
+  guardian: {
+    fatherName: 'Jane Doe',
+    fatherOccupation: 'Doctor',
+    fatherContactNo: '8801859229595',
+    motherName: 'Janny Doe',
+    motherOccupation: 'Teacher',
+    motherContactNo: '8801859229595',
+  },
+  localGuardian: {
+    name: 'Jim Beam',
+    occupation: 'Doctor',
+    contactNo: '+10987654321',
+    address: '221-B ',
+  },
+  admissionSemester: '669578c24ddfce61751ed943',
+  academicDepartment: '665b3a25b9c595faa365e315',
+};
 
-  const semesterOptions = data?.map((item) => ({
+const CreateStudent = () => {
+  const { data: semesters, isLoading: isSemesterLoading } =
+    useGetAllSemestersQuery([]);
+
+  const { data: academicDepartments, isLoading: isAcademicDepartmentLoading } =
+    useGetAllAcademicDepartmentsQuery([]);
+
+  const [createStudent, { data, error }] = useCreateStudentMutation();
+
+  console.log({ data, error });
+
+  const semesterOptions = semesters?.map((item) => ({
     value: item._id,
     label: `${item.name} ${item.year}`,
   }));
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    const formData = new FormData();
+  const academicDepartmentOptions = academicDepartments?.map((item) => ({
+    value: item._id,
+    label: item.name,
+  }));
 
-    formData.append('data', JSON.stringify(data));
-    console.log(Object.fromEntries(formData));
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const studentData = {
+      password: import.meta.env.VITE_DEFAULT_PASSWORD,
+      student: data,
+    };
+
+    const formData = new FormData();
+    formData.append('data', JSON.stringify(studentData));
+    formData.append('file', data.image);
+
+    await createStudent(formData);
   };
 
   return (
-    <PHForm onSubmit={onSubmit}>
+    <PHForm onSubmit={onSubmit} defaultValues={studentDefaultValues}>
       <Divider>Personal Info</Divider>
       <Row gutter={24}>
         <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
@@ -69,7 +127,12 @@ const CreateStudent = () => {
           <PHInput name="name.lastName" label="Last Name" />
         </Col>
         <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
-          <PHInput name="gender" label="Gender" />
+          <PHSelect
+            name="gender"
+            label="Gender"
+            placeholder="Select Gender"
+            options={genderOptions}
+          />
         </Col>
         <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
           <PHDatePicker
@@ -79,7 +142,15 @@ const CreateStudent = () => {
           />
         </Col>
         <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
-          <PHInput name="bloodGroup" label="Blood Group" />
+          <PHSelect
+            name="bloogGroup"
+            label="Blood Group"
+            placeholder="Select Blood Group"
+            options={bloodGroupOptions}
+          />
+        </Col>
+        <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+          <PHFileInput label="Profile Image" />
         </Col>
       </Row>
 
@@ -145,10 +216,19 @@ const CreateStudent = () => {
         <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
           <PHSelect
             disabled={isSemesterLoading}
-            name="semester"
+            name="admissionSemester"
             label="Academic Semester"
             placeholder="Select Semester"
-            options={semesterOptions || []}
+            options={semesterOptions}
+          />
+        </Col>
+        <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+          <PHSelect
+            disabled={isAcademicDepartmentLoading}
+            name="academicDepartment"
+            label="Academic Department"
+            placeholder="Select Academic Department"
+            options={academicDepartmentOptions}
           />
         </Col>
       </Row>

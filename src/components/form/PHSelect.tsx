@@ -11,13 +11,14 @@ interface IPHSelectProps {
         value?: string;
         label?: string;
         disabled?: boolean;
-      }[];
+      }[]
+    | undefined;
 }
 
 const PHSelect = ({
   name,
   label,
-  options,
+  options = [],
   disabled,
   placeholder,
 }: IPHSelectProps) => {

@@ -1,4 +1,5 @@
 import {
+  IAcademicDepartment,
   IAcademicSemester,
   IQueryParam,
   ISuccessResponse,
@@ -7,6 +8,13 @@ import { baseApi } from '../../api/baseApi';
 
 export const academicManagementApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    createSemester: builder.mutation({
+      query: (data) => ({
+        url: '/academic-semesters/create-semester',
+        method: 'POST',
+        body: data,
+      }),
+    }),
     getAllSemesters: builder.query({
       query: (queryParams: IQueryParam[]) => {
         const params = new URLSearchParams();
@@ -16,7 +24,7 @@ export const academicManagementApi = baseApi.injectEndpoints({
         }
 
         return {
-          url: '/semesters',
+          url: '/academic-semesters',
           method: 'GET',
           params,
         };
@@ -24,15 +32,28 @@ export const academicManagementApi = baseApi.injectEndpoints({
       transformResponse: (res: ISuccessResponse<IAcademicSemester[]>) =>
         res.data,
     }),
-    createSemester: builder.mutation({
-      query: (data) => ({
-        url: '/semesters/create-semester',
-        method: 'POST',
-        body: data,
-      }),
+    getAllAcademicDepartments: builder.query({
+      query: (queryParams: IQueryParam[]) => {
+        const params = new URLSearchParams();
+
+        if (queryParams) {
+          queryParams.forEach(({ key, value }) => params.append(key, value));
+        }
+
+        return {
+          url: '/academic-departments',
+          method: 'GET',
+          params,
+        };
+      },
+      transformResponse: (res: ISuccessResponse<IAcademicDepartment[]>) =>
+        res.data,
     }),
   }),
 });
 
-export const { useGetAllSemestersQuery, useCreateSemesterMutation } =
-  academicManagementApi;
+export const {
+  useGetAllSemestersQuery,
+  useCreateSemesterMutation,
+  useGetAllAcademicDepartmentsQuery,
+} = academicManagementApi;

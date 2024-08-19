@@ -1,15 +1,16 @@
 import { UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
 import { createElement } from 'react';
-import AcademicDepartment from '../pages/admin/academicManagement/AcademicDepartment';
-import AcademicFaculty from '../pages/admin/academicManagement/AcademicFaculty';
-import AcademicSemester from '../pages/admin/academicManagement/AcademicSemester';
-import CreateAcademicDepartment from '../pages/admin/academicManagement/CreateAcademicDepartment';
-import CreateAcademicFaculty from '../pages/admin/academicManagement/CreateAcademicFaculty';
-import CreateAcademicSemester from '../pages/admin/academicManagement/CreateAcademicSemester';
+import AcademicDepartment from '../pages/admin/AcademicManagement/AcademicDepartment';
+import AcademicFaculty from '../pages/admin/AcademicManagement/AcademicFaculty';
+import AcademicSemesters from '../pages/admin/AcademicManagement/AcademicSemesters';
+import CreateAcademicDepartment from '../pages/admin/AcademicManagement/CreateAcademicDepartment';
+import CreateAcademicFaculty from '../pages/admin/AcademicManagement/CreateAcademicFaculty';
+import CreateAcademicSemester from '../pages/admin/AcademicManagement/CreateAcademicSemester';
 import AdminDashboard from '../pages/admin/AdminDashboard';
 import CreateAdmin from '../pages/admin/userManagement/CreateAdmin';
 import CreateFaculty from '../pages/admin/userManagement/CreateFaculty';
 import CreateStudent from '../pages/admin/userManagement/CreateStudent';
+import StudentData from '../pages/admin/userManagement/StudentData';
 
 export const adminPaths = [
   {
@@ -32,7 +33,7 @@ export const adminPaths = [
         name: 'Academic Semester',
         path: 'academic-semester',
         icon: createElement(UserOutlined),
-        element: <AcademicSemester />,
+        element: <AcademicSemesters />,
       },
       {
         name: 'Create A. Faculty',
@@ -65,6 +66,18 @@ export const adminPaths = [
     icon: createElement(UserOutlined),
     children: [
       {
+        name: 'Create Student',
+        path: 'create-student',
+        icon: createElement(UserOutlined),
+        element: <CreateStudent />,
+      },
+      {
+        name: 'Students',
+        path: 'students-data',
+        icon: createElement(UserOutlined),
+        element: <StudentData />,
+      },
+      {
         name: 'Create Admin',
         path: 'create-admin',
         icon: createElement(UserOutlined),
@@ -75,12 +88,6 @@ export const adminPaths = [
         path: 'create-faculty',
         icon: createElement(UserOutlined),
         element: <CreateFaculty />,
-      },
-      {
-        name: 'Create Student',
-        path: 'create-student',
-        icon: createElement(UserOutlined),
-        element: <CreateStudent />,
       },
     ],
   },

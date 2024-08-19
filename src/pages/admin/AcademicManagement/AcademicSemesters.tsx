@@ -3,12 +3,12 @@ import { useState } from 'react';
 import { IAcademicSemester, IQueryParam } from '../../../interfaces';
 import { useGetAllSemestersQuery } from '../../../redux/features/admin/academicManagementApi';
 
-type ISemesterData = Pick<
+type ITableData = Pick<
   IAcademicSemester,
   '_id' | 'name' | 'year' | 'startMonth' | 'endMonth'
 >;
 
-const columns: TableColumnsType<ISemesterData> = [
+const columns: TableColumnsType<ITableData> = [
   {
     title: 'Name',
     dataIndex: 'name',
@@ -59,7 +59,7 @@ const columns: TableColumnsType<ISemesterData> = [
   },
 ];
 
-const AcademicSemester = () => {
+const AcademicSemesters = () => {
   const [params, setParams] = useState<IQueryParam[]>([]);
   const { data: semesters, isFetching } = useGetAllSemestersQuery(params);
 
@@ -73,7 +73,7 @@ const AcademicSemester = () => {
     })
   );
 
-  const onChange: TableProps<ISemesterData>['onChange'] = (
+  const onChange: TableProps<ITableData>['onChange'] = (
     _pagination,
     filters,
     _sorter,
@@ -102,4 +102,4 @@ const AcademicSemester = () => {
   );
 };
 
-export default AcademicSemester;
+export default AcademicSemesters;

@@ -31,7 +31,7 @@ const CreateSemesterRegistration = () => {
     };
 
     const result = await createSemesterRegistration(semesterRegistrationData);
-    console.log(result);
+
     if (result?.data) {
       toast.success({
         message: 'Semester registered Successfully!',

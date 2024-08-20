@@ -6,6 +6,7 @@ interface IPHSelectProps {
   label?: string;
   disabled?: boolean;
   placeholder?: string;
+  mode?: 'multiple' | 'tags';
   options:
     | {
         value?: string;
@@ -21,6 +22,7 @@ const PHSelect = ({
   options = [],
   disabled,
   placeholder,
+  mode,
 }: IPHSelectProps) => {
   return (
     <Controller
@@ -29,6 +31,7 @@ const PHSelect = ({
         <Form.Item label={label}>
           <Select
             {...field}
+            mode={mode}
             style={{ width: '100%' }}
             disabled={disabled}
             options={options}

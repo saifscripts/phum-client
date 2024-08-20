@@ -1,49 +1,24 @@
 import {
   Button,
+  Dropdown,
+  MenuProps,
   Pagination,
-  Space,
   Table,
   TableColumnsType,
   TableProps,
+  Tag,
 } from 'antd';
+import moment from 'moment';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { IQueryParam } from '../../../interfaces';
 import { useGetAllRegisteredSemestersQuery } from '../../../redux/features/admin/courseManagementApi';
 
 type ITableData = {
   name: string;
   status: 'UPCOMING' | 'ONGOING' | 'ENDED';
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
 };
-
-const columns: TableColumnsType<ITableData> = [
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  {
-    title: 'Status',
-    dataIndex: 'status',
-    key: 'status',
-  },
-  { title: 'Start Date', dataIndex: 'startDate', key: 'startDate' },
-  { title: 'End Date', dataIndex: 'endDate', key: 'endDate' },
-  {
-    title: 'Action',
-    key: 'action',
-    width: '1%',
-    render: (item) => (
-      <Space>
-        <Link to={`/admin/registered-semester/edit/${item.key}`}>
-          <Button>Update</Button>
-        </Link>
-      </Space>
-    ),
-  },
-];
 
 const RegisteredSemesterData = () => {
   const [params, setParams] = useState<IQueryParam[]>([]);
@@ -61,12 +36,67 @@ const RegisteredSemesterData = () => {
       key: _id,
       name: `${academicSemester?.name} ${academicSemester?.year}`,
       status,
-      startDate,
-      endDate,
+      startDate: moment(new Date(startDate)).format('MMMM'),
+      endDate: moment(new Date(endDate)).format('MMMM'),
     })
   );
 
   const metaData = data?.meta;
+
+  const handleDropdownClick: MenuProps['onClick'] = ({ key }) => {
+    alert(key);
+  };
+
+  const items: MenuProps['items'] = [
+    {
+      label: 'UPCOMING',
+      key: 'UPCOMING',
+    },
+    {
+      label: 'ONGOING',
+      key: 'ONGOING',
+    },
+    {
+      label: 'ENDED',
+      key: 'ENDED',
+    },
+  ];
+
+  const menuProps = { items, onClick: handleDropdownClick };
+
+  const columns: TableColumnsType<ITableData> = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+      render: (status) => {
+        let color = 'grey';
+
+        if (status === 'UPCOMING') color = 'blue';
+        if (status === 'ONGOING') color = 'green';
+        if (status === 'ENDED') color = 'red';
+
+        return <Tag color={color}>{status}</Tag>;
+      },
+    },
+    { title: 'Start Date', dataIndex: 'startDate', key: 'startDate' },
+    { title: 'End Date', dataIndex: 'endDate', key: 'endDate' },
+    {
+      title: 'Action',
+      key: 'action',
+      width: '1%',
+      render: () => (
+        <Dropdown menu={menuProps}>
+          <Button>Update</Button>
+        </Dropdown>
+      ),
+    },
+  ];
 
   const onChange: TableProps<ITableData>['onChange'] = (
     _pagination,

@@ -2,6 +2,7 @@ export * from './academicDepartment.interface';
 export * from './academicFaculty.interface';
 export * from './academicSemester.interface';
 export * from './admin.interface';
+export * from './course.interface';
 export * from './faculty.interface';
 export * from './global.interface';
 export * from './routes.interface';

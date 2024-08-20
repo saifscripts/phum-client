@@ -4,7 +4,7 @@ import {
   ISemesterStatus,
   ISuccessResponse,
 } from '../../../interfaces';
-import { ICourse } from '../../../interfaces/course.interface';
+import { ICourse, ICourseFaculty } from '../../../interfaces/course.interface';
 import { baseApi } from '../../api/baseApi';
 
 export const courseManagementApi = baseApi.injectEndpoints({
@@ -88,11 +88,22 @@ export const courseManagementApi = baseApi.injectEndpoints({
       { id: string; data: any }
     >({
       query: (data) => ({
-        url: `/semester-registrations/${data.id}`,
+        url: `/courses/${data.id}`,
         method: 'PATCH',
         body: data.data,
       }),
       invalidatesTags: ['Course'],
+    }),
+
+    assignCourseFaculties: builder.mutation<
+      ISuccessResponse<ICourseFaculty>,
+      { id: string; data: any }
+    >({
+      query: (data) => ({
+        url: `/courses/${data.id}/assign-faculties`,
+        method: 'PUT',
+        body: data.data,
+      }),
     }),
   }),
 });
@@ -104,4 +115,5 @@ export const {
   useCreateCourseMutation,
   useGetAllCoursesQuery,
   useUpdateCourseMutation,
+  useAssignCourseFacultiesMutation,
 } = courseManagementApi;

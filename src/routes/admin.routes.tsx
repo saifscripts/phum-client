@@ -8,7 +8,7 @@ import CreateAcademicDepartment from '../pages/admin/AcademicManagement/CreateAc
 import CreateAcademicFaculty from '../pages/admin/AcademicManagement/CreateAcademicFaculty';
 import CreateAcademicSemester from '../pages/admin/AcademicManagement/CreateAcademicSemester';
 import AdminDashboard from '../pages/admin/AdminDashboard';
-import Courses from '../pages/admin/courseManagement/Courses';
+import CourseData from '../pages/admin/courseManagement/CourseData';
 import CreateCourse from '../pages/admin/courseManagement/CreateCourse';
 import CreateOfferedCourse from '../pages/admin/courseManagement/CreateOfferedCourse';
 import CreateSemesterRegistration from '../pages/admin/courseManagement/CreateSemesterRegistration';
@@ -168,7 +168,7 @@ export const adminPaths: IPath[] = [
         name: 'Courses',
         path: 'courses',
         icon: createElement(UserOutlined),
-        element: <Courses />,
+        element: <CourseData />,
       },
       {
         name: 'Crete Offered Course',

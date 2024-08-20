@@ -1,6 +1,7 @@
 import {
   IQueryParam,
   ISemesterRegistration,
+  ISemesterStatus,
   ISuccessResponse,
 } from '../../../interfaces';
 import { baseApi } from '../../api/baseApi';
@@ -35,10 +36,22 @@ export const courseManagementApi = baseApi.injectEndpoints({
         return { registeredSemesters: res.data, meta: res.meta };
       },
     }),
+    updateSemesterRegistration: builder.mutation<
+      ISuccessResponse<ISemesterRegistration>,
+      { id: string; data: { status: ISemesterStatus } }
+    >({
+      query: (data) => ({
+        url: `/semester-registrations/${data.id}`,
+        method: 'PATCH',
+        body: data.data,
+      }),
+      invalidatesTags: ['SemesterRegistration'],
+    }),
   }),
 });
 
 export const {
   useCreateSemesterRegistrationMutation,
   useGetAllRegisteredSemestersQuery,
+  useUpdateSemesterRegistrationMutation,
 } = courseManagementApi;

@@ -2,6 +2,7 @@ import {
   Button,
   Dropdown,
   MenuProps,
+  notification,
   Pagination,
   Table,
   TableColumnsType,
@@ -10,12 +11,21 @@ import {
 } from 'antd';
 import moment from 'moment';
 import { useState } from 'react';
-import { IQueryParam } from '../../../interfaces';
-import { useGetAllRegisteredSemestersQuery } from '../../../redux/features/admin/courseManagementApi';
+import { SemesterStatus } from '../../../constants';
+import {
+  IErrorResponse,
+  IQueryParam,
+  ISemesterStatus,
+} from '../../../interfaces';
+import {
+  useGetAllRegisteredSemestersQuery,
+  useUpdateSemesterRegistrationMutation,
+} from '../../../redux/features/admin/courseManagementApi';
+import flattenErrorMessages from '../../../utils/flattenErrorMessages';
 
 type ITableData = {
   name: string;
-  status: 'UPCOMING' | 'ONGOING' | 'ENDED';
+  status: ISemesterStatus;
   startDate: string;
   endDate: string;
 };
@@ -23,6 +33,8 @@ type ITableData = {
 const RegisteredSemesterData = () => {
   const [params, setParams] = useState<IQueryParam[]>([]);
   const [page, setPage] = useState(1);
+  const [updateSemesterRegistration] = useUpdateSemesterRegistrationMutation();
+  const [toast, contextHolder] = notification.useNotification();
 
   const { data, isFetching } = useGetAllRegisteredSemestersQuery([
     { key: 'limit', value: 5 },
@@ -43,26 +55,43 @@ const RegisteredSemesterData = () => {
 
   const metaData = data?.meta;
 
-  const handleDropdownClick: MenuProps['onClick'] = ({ key }) => {
-    alert(key);
+  const handleDropdownClick = async (id: string, status: ISemesterStatus) => {
+    const result = await updateSemesterRegistration({
+      id,
+      data: { status },
+    });
+
+    if (result?.data) {
+      toast.success({
+        message: 'Status updated Successfully!',
+      });
+
+      return true; // this will reset the form
+    } else {
+      const description = flattenErrorMessages(
+        (result as IErrorResponse)?.error?.data?.errorSources
+      );
+      toast.error({
+        message: (result as IErrorResponse)?.error?.data?.message,
+        description,
+      });
+    }
   };
 
   const items: MenuProps['items'] = [
     {
-      label: 'UPCOMING',
-      key: 'UPCOMING',
+      label: SemesterStatus.UPCOMING,
+      key: SemesterStatus.UPCOMING,
     },
     {
-      label: 'ONGOING',
-      key: 'ONGOING',
+      label: SemesterStatus.ONGOING,
+      key: SemesterStatus.ONGOING,
     },
     {
-      label: 'ENDED',
-      key: 'ENDED',
+      label: SemesterStatus.ENDED,
+      key: SemesterStatus.ENDED,
     },
   ];
-
-  const menuProps = { items, onClick: handleDropdownClick };
 
   const columns: TableColumnsType<ITableData> = [
     {
@@ -77,9 +106,9 @@ const RegisteredSemesterData = () => {
       render: (status) => {
         let color = 'grey';
 
-        if (status === 'UPCOMING') color = 'blue';
-        if (status === 'ONGOING') color = 'green';
-        if (status === 'ENDED') color = 'red';
+        if (status === SemesterStatus.UPCOMING) color = 'blue';
+        if (status === SemesterStatus.ONGOING) color = 'green';
+        if (status === SemesterStatus.ENDED) color = 'red';
 
         return <Tag color={color}>{status}</Tag>;
       },
@@ -90,8 +119,14 @@ const RegisteredSemesterData = () => {
       title: 'Action',
       key: 'action',
       width: '1%',
-      render: () => (
-        <Dropdown menu={menuProps}>
+      render: (item) => (
+        <Dropdown
+          menu={{
+            items,
+            onClick: ({ key }) =>
+              handleDropdownClick(item?.key, key as ISemesterStatus),
+          }}
+        >
           <Button>Update</Button>
         </Dropdown>
       ),
@@ -119,6 +154,7 @@ const RegisteredSemesterData = () => {
 
   return (
     <>
+      {contextHolder}
       <Table
         loading={isFetching}
         dataSource={semesterRegistrationData}

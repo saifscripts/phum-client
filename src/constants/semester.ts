@@ -6,6 +6,12 @@ export const semesterOptions = [
   { value: '03', label: 'Fall' },
 ];
 
+export const SemesterStatus = {
+  UPCOMING: 'UPCOMING',
+  ONGOING: 'ONGOING',
+  ENDED: 'ENDED',
+} as const;
+
 export const semesterStatusOptions = [
   { value: 'UPCOMING', label: 'Upcoming' },
   { value: 'ONGOING', label: 'Ongoing' },

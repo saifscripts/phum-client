@@ -13,7 +13,7 @@ import CreateCourse from '../pages/admin/courseManagement/CreateCourse';
 import CreateOfferedCourse from '../pages/admin/courseManagement/CreateOfferedCourse';
 import CreateSemesterRegistration from '../pages/admin/courseManagement/CreateSemesterRegistration';
 import OfferedCourses from '../pages/admin/courseManagement/OfferedCourses';
-import RegisteredSemesters from '../pages/admin/courseManagement/RegisteredSemesters';
+import RegisteredSemesterData from '../pages/admin/courseManagement/RegisteredSemesterData';
 import AdminData from '../pages/admin/userManagement/AdminData';
 import AdminDetails from '../pages/admin/userManagement/AdminDetails';
 import CreateAdmin from '../pages/admin/userManagement/CreateAdmin';
@@ -156,7 +156,7 @@ export const adminPaths: IPath[] = [
         name: 'Registered Semesters',
         path: 'registered-semesters',
         icon: createElement(UserOutlined),
-        element: <RegisteredSemesters />,
+        element: <RegisteredSemesterData />,
       },
       {
         name: 'Create Course',

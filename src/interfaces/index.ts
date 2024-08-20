@@ -5,5 +5,6 @@ export * from './admin.interface';
 export * from './faculty.interface';
 export * from './global.interface';
 export * from './routes.interface';
+export * from './semesterRegistration.interface';
 export * from './student.interface';
 export * from './user.interface';

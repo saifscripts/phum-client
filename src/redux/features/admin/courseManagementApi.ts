@@ -1,3 +1,8 @@
+import {
+  IQueryParam,
+  ISemesterRegistration,
+  ISuccessResponse,
+} from '../../../interfaces';
 import { baseApi } from '../../api/baseApi';
 
 export const courseManagementApi = baseApi.injectEndpoints({
@@ -9,29 +14,31 @@ export const courseManagementApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
-    // getAllSemesters: builder.query({
-    //   query: (queryParams: IQueryParam[]) => {
-    //     const params = new URLSearchParams();
+    getAllRegisteredSemesters: builder.query({
+      query: (queryParams: IQueryParam[]) => {
+        const params = new URLSearchParams();
 
-    //     if (queryParams) {
-    //       queryParams.forEach(({ key, value }) =>
-    //         params.append(key, value.toString())
-    //       );
-    //     }
+        if (queryParams) {
+          queryParams.forEach(({ key, value }) =>
+            params.append(key, value.toString())
+          );
+        }
 
-    //     return {
-    //       url: '/academic-semesters',
-    //       method: 'GET',
-    //       params,
-    //     };
-    //   },
-    //   transformResponse: (res: ISuccessResponse<IAcademicSemester[]>) =>
-    //     res.data,
-    // }),
+        return {
+          url: '/semester-registrations',
+          method: 'GET',
+          params,
+        };
+      },
+      providesTags: ['SemesterRegistration'],
+      transformResponse: (res: ISuccessResponse<ISemesterRegistration[]>) => {
+        return { registeredSemesters: res.data, meta: res.meta };
+      },
+    }),
   }),
 });
 
 export const {
   useCreateSemesterRegistrationMutation,
-  // useGetAllSemestersQuery,
+  useGetAllRegisteredSemestersQuery,
 } = courseManagementApi;

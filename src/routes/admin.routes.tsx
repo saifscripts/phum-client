@@ -8,6 +8,12 @@ import CreateAcademicDepartment from '../pages/admin/AcademicManagement/CreateAc
 import CreateAcademicFaculty from '../pages/admin/AcademicManagement/CreateAcademicFaculty';
 import CreateAcademicSemester from '../pages/admin/AcademicManagement/CreateAcademicSemester';
 import AdminDashboard from '../pages/admin/AdminDashboard';
+import Courses from '../pages/admin/courseManagement/Courses';
+import CreateCourse from '../pages/admin/courseManagement/CreateCourse';
+import CreateOfferedCourse from '../pages/admin/courseManagement/CreateOfferedCourse';
+import CreateSemesterRegistration from '../pages/admin/courseManagement/CreateSemesterRegistration';
+import OfferedCourses from '../pages/admin/courseManagement/OfferedCourses';
+import RegisteredSemesters from '../pages/admin/courseManagement/RegisteredSemesters';
 import AdminData from '../pages/admin/userManagement/AdminData';
 import AdminDetails from '../pages/admin/userManagement/AdminDetails';
 import CreateAdmin from '../pages/admin/userManagement/CreateAdmin';
@@ -133,6 +139,48 @@ export const adminPaths: IPath[] = [
       {
         path: 'admin-data/edit/:adminId',
         element: <UpdateAdmin />,
+      },
+    ],
+  },
+  {
+    name: 'Course Management',
+    icon: createElement(UserOutlined),
+    children: [
+      {
+        name: 'Create S. Registration',
+        path: 'create-semester-registration',
+        icon: createElement(UserOutlined),
+        element: <CreateSemesterRegistration />,
+      },
+      {
+        name: 'Registered Semesters',
+        path: 'registered-semesters',
+        icon: createElement(UserOutlined),
+        element: <RegisteredSemesters />,
+      },
+      {
+        name: 'Create Course',
+        path: 'create-course',
+        icon: createElement(UserOutlined),
+        element: <CreateCourse />,
+      },
+      {
+        name: 'Courses',
+        path: 'courses',
+        icon: createElement(UserOutlined),
+        element: <Courses />,
+      },
+      {
+        name: 'Crete Offered Course',
+        path: 'create-offered-course',
+        icon: createElement(UserOutlined),
+        element: <CreateOfferedCourse />,
+      },
+      {
+        name: 'Offered Courses',
+        path: 'offered-courses',
+        icon: createElement(UserOutlined),
+        element: <OfferedCourses />,
       },
     ],
   },

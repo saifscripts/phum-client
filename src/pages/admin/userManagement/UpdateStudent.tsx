@@ -35,7 +35,7 @@ const UpdateStudent = () => {
   };
 
   const { data: semesters, isLoading: isSemesterLoading } =
-    useGetAllSemestersQuery([]);
+    useGetAllSemestersQuery([{ key: 'sort', value: 'year' }]);
 
   const { data: academicDepartments, isLoading: isAcademicDepartmentLoading } =
     useGetAllAcademicDepartmentsQuery([]);

@@ -6,6 +6,12 @@ export const semesterOptions = [
   { value: '03', label: 'Fall' },
 ];
 
+export const semesterStatusOptions = [
+  { value: 'UPCOMING', label: 'Upcoming' },
+  { value: 'ONGOING', label: 'Ongoing' },
+  { value: 'ENDED', label: 'Ended' },
+];
+
 export const SemesterName = ['Autumn', 'Summer', 'Fall'] as const;
 export const SemesterCode = ['01', '02', '03'] as const;
 

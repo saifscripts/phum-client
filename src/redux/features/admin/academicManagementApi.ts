@@ -1,5 +1,6 @@
 import {
   IAcademicDepartment,
+  IAcademicFaculty,
   IAcademicSemester,
   IQueryParam,
   ISuccessResponse,
@@ -34,6 +35,26 @@ export const academicManagementApi = baseApi.injectEndpoints({
       transformResponse: (res: ISuccessResponse<IAcademicSemester[]>) =>
         res.data,
     }),
+    getAllAcademicFaculties: builder.query({
+      query: (queryParams: IQueryParam[]) => {
+        const params = new URLSearchParams();
+
+        if (queryParams) {
+          queryParams.forEach(({ key, value }) =>
+            params.append(key, value.toString())
+          );
+        }
+
+        return {
+          url: '/academic-faculties',
+          method: 'GET',
+          params,
+        };
+      },
+      transformResponse: (res: ISuccessResponse<IAcademicFaculty[]>) => {
+        return { academicFaculties: res.data, meta: res.meta };
+      },
+    }),
     getAllAcademicDepartments: builder.query({
       query: (queryParams: IQueryParam[]) => {
         const params = new URLSearchParams();
@@ -59,5 +80,6 @@ export const academicManagementApi = baseApi.injectEndpoints({
 export const {
   useGetAllSemestersQuery,
   useCreateSemesterMutation,
+  useGetAllAcademicFacultiesQuery,
   useGetAllAcademicDepartmentsQuery,
 } = academicManagementApi;

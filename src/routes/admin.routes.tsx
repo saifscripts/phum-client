@@ -12,7 +12,6 @@ import CourseData from '../pages/admin/courseManagement/CourseData';
 import CreateCourse from '../pages/admin/courseManagement/CreateCourse';
 import CreateOfferedCourse from '../pages/admin/courseManagement/CreateOfferedCourse';
 import CreateSemesterRegistration from '../pages/admin/courseManagement/CreateSemesterRegistration';
-import OfferedCourses from '../pages/admin/courseManagement/OfferedCourses';
 import RegisteredSemesterData from '../pages/admin/courseManagement/RegisteredSemesterData';
 import AdminData from '../pages/admin/userManagement/AdminData';
 import AdminDetails from '../pages/admin/userManagement/AdminDetails';
@@ -171,16 +170,10 @@ export const adminPaths: IPath[] = [
         element: <CourseData />,
       },
       {
-        name: 'Crete Offered Course',
+        name: 'Create O. Course',
         path: 'create-offered-course',
         icon: createElement(UserOutlined),
         element: <CreateOfferedCourse />,
-      },
-      {
-        name: 'Offered Courses',
-        path: 'offered-courses',
-        icon: createElement(UserOutlined),
-        element: <OfferedCourses />,
       },
     ],
   },

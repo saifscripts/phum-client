@@ -1,3 +1,5 @@
+import { IFaculty } from './faculty.interface';
+
 export interface IPreRequisiteCourses {
   course: string;
   isDeleted: boolean;
@@ -14,5 +16,5 @@ export interface ICourse {
 
 export interface ICourseFaculty {
   course: string;
-  faculties: [string];
+  faculties: IFaculty[];
 }

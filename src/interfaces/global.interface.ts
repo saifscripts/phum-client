@@ -1,3 +1,5 @@
+import { arrayOfOneToFiftyEight } from '../constants';
+
 export interface IErrorSource {
   path: string | number;
   message: string;
@@ -37,3 +39,30 @@ export interface IQueryParam {
   key: string;
   value: string | number;
 }
+
+export type IHourStep =
+  | 1
+  | 2
+  | 4
+  | 3
+  | 5
+  | 6
+  | 7
+  | 8
+  | 9
+  | 10
+  | 11
+  | 12
+  | 13
+  | 14
+  | 15
+  | 16
+  | 17
+  | 18
+  | 19
+  | 20
+  | 21
+  | 22;
+
+export type IMinuteStep = (typeof arrayOfOneToFiftyEight)[number];
+export type ISecondStep = (typeof arrayOfOneToFiftyEight)[number];
